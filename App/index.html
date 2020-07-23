@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+    <script id="task-list-template" type="text/x-handlebars-template">
+        <ul id="list" class="grid">
+            {{#each this}}
+            <li id="{{_id}}" class="listItem {{importance}}" data-id="{{_id}}" data-date="{{dueDate}}">
+                <div class="calendar">
+                    <div class="calendarDay"> {{dueDateDay}} </div>
+                    <div class="calendarMonth"> {{dueDateMonth}} </div>
+                    <div class="calendarYear">{{dueDateYear}}</div>
+                </div>
+                <div class="listWrapper">
+                    <div class="listTitle">{{title}}</div>
+                    <div class="listContent">{{note}}</div>
+                    <div class="created">Created: {{created}}</div>
+                    <div class="listActions">
+                        <div class="check {{done}}"></div>
+                        <div class="listActions_right">
+                            <div class="edit"></div>
+                            <div class="delete"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {{/each}}
+        </ul>
+    </script>
+    <script id="task-list-done-template" type="text/x-handlebars-template">
+        <ul id="list" class="grid">
+            {{#each this}} {{#if done}}
+            <li id="{{_id}}" class="listItem {{importance}}" data-id="{{_id}}" data-date="{{dueDate}}">
+                <div class="calendar">
+                    <div class="calendarDay"> {{dueDateDay}} </div>
+                    <div class="calendarMonth"> {{dueDateMonth}} </div>
+                    <div class="calendarYear">{{dueDateYear}}</div>
+                </div>
+                <div class="listWrapper">
+                    <div class="listTitle">{{title}}</div>
+                    <div class="listContent">{{note}}</div>
+                    <div class="created">Created: {{created}}</div>
+                    <div class="listActions">
+                        <div class="check {{done}}"></div>
+                        <div class="listActions_right">
+                            <div class="edit"></div>
+                            <div class="delete"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {{/if}} {{/each}}
+        </ul>
+    </script>
+    <script id="task-list-undone-template" type="text/x-handlebars-template">
+        <ul id="list" class="grid">
+            {{#each this}} {{#unless done}}
+            <li id="{{_id}}" class="listItem {{importance}}" data-id="{{_id}}" data-date="{{dueDate}}">
+                <div class="calendar">
+                    <div class="calendarDay"> {{dueDateDay}} </div>
+                    <div class="calendarMonth"> {{dueDateMonth}} </div>
+                    <div class="calendarYear">{{dueDateYear}}</div>
+                </div>
+                <div class="listWrapper">
+                    <div class="listTitle">{{title}}</div>
+                    <div class="listContent">{{note}}</div>
+                    <div class="created">Created: {{created}}</div>
+                    <div class="listActions">
+                        <div class="check {{done}}"></div>
+                        <div class="listActions_right">
+                            <div class="edit"></div>
+                            <div class="delete"></div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            {{/unless}} {{/each}}
+        </ul>
+    </script>
+    <title>Notes - CASFEE2020</title>
+</head>
+
+<body>
+    <div class="taskFullview">
+        <div class="taskFullview__box"></div>
+    </div>
+    <div id="modalForm">
+        <div class="modalFormInner">
+            <div class="closeForm">X</div>
+            <div class="FormBlock">
+                <label>Title<input type="text" id="title" required></label>
+            </div>
+            <div class="FormBlock">
+                <label>Inhalt<input type="text" id="note" required></label>
+            </div>
+            <div class="FormBlock">
+                <label>Wichtigkeit<br>
+                    <select id="importance" required>
+                        <option value="high">High</option>
+                        <option value="medium" selected="selected">Medium</option>
+                        <option value="low">Low</option>
+                    </select>
+                </label>
+            </div>
+            <div class="FormBlock">
+                <label>Erledigt bis:</label>
+                <input type="date" id="date" required>
+
+            </div>
+            <input type="text" id="key">
+            <button id="save">Save</button>
+            <button id="update">Update</button>
+        </div>
+    </div>
+
+    <div id="wrapper" class="flex_row">
+        <section class="top">
+            <div class="logo"></div>
+            <button id="add"><p class="plusButton">+</p> new Note</button>
+            <button id="colorChangerDark" class="colorChanger">Dark Mode</button>
+            <button id="colorChangerLight" class="colorChanger">Light Mode</button>
+        </section>
+        <section class="center">
+            <div id="sortBlock">
+                <div class="sortTasks">
+                    <div id="sortPending" class="sortButton">Show pending</div>
+                    <div id="sortFinished" class="sortButton">Show finished</div>
+                </div>
+                <div class="sortTasks">
+                    <div id="sortFinishDate" class="sortButton">by finish date</div>
+                    <div id="sortcreatedDate" class="sortButton">by created date</div>
+                    <div id="sortIMP" class="sortButton">By Importance</div>
+                </div>
+            </div>
+            <div id="container"></div>
+            <div id="paginationBlock">
+                <div class="previous"></div>
+                <div class="next"></div>
+            </div>
+        </section>
+    </div>
+    <footer id="footer">
+        <div class="copy"></div>
+    </footer>
+    <script src="script/filter.js"></script>
+    <script src="script/functions.js"></script>
+    <script src="script/events.js"></script>
+    <script src="script/style.js"></script>
+
+</body>
+
+</html>
